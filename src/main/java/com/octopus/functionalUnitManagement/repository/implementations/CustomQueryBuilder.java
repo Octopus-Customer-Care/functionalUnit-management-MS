@@ -20,7 +20,7 @@ public class CustomQueryBuilder implements ICustomQueryBuilder {
     }
 
     @Override
-    public List<Employee> getEmployeeByName(String name) {
+    public List<Employee> getEmployees(String name) {
         Query query = new Query();
         query.addCriteria(new Criteria().orOperator(Criteria.where("firstName").regex(name),
                 Criteria.where("lastName").regex(name)));

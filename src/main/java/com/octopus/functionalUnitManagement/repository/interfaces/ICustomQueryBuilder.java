@@ -6,6 +6,6 @@ import com.octopus.functionalUnitManagement.models.FunctionalUnit;
 import java.util.List;
 
 public interface ICustomQueryBuilder {
-    List<Employee> getEmployeeByName(String name);
+    List<Employee> getEmployees(String name);
     List<FunctionalUnit> getWorkUnits(String workUnit);
 }

@@ -32,7 +32,7 @@ public class EmployeeGatewayService implements IEmployeeGatewayService {
     public List<Employee> getAllEmployee(String name) {
         if (name == null)
             return employeeRepository.findAll();
-        return customQueryBuilder.getEmployeeByName(name);
+        return customQueryBuilder.getEmployees(name);
     }
 
     @Override
