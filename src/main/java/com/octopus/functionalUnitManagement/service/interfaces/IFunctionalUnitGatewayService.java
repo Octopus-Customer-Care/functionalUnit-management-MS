@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface IFunctionalUnitGatewayService {
     FunctionalUnit createUnit(FunctionalUnit functionalUnit);
-    List<FunctionalUnit> getAllUnits();
+    List<FunctionalUnit> getAllUnits(String unitName);
     Optional<FunctionalUnit> getUnitById(String id);
 }

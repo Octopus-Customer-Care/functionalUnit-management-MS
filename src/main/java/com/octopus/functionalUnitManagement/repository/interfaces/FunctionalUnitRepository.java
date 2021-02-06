@@ -1,4 +1,4 @@
-package com.octopus.functionalUnitManagement.repository;
+package com.octopus.functionalUnitManagement.repository.interfaces;
 
 import com.octopus.functionalUnitManagement.models.FunctionalUnit;
 import org.springframework.data.mongodb.repository.MongoRepository;
