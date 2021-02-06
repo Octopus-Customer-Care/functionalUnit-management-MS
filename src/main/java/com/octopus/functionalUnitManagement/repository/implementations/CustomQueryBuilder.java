@@ -22,7 +22,8 @@ public class CustomQueryBuilder implements ICustomQueryBuilder {
     @Override
     public List<Employee> getEmployeeByName(String name) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("firstName").regex(name));
+        query.addCriteria(new Criteria().orOperator(Criteria.where("firstName").regex(name),
+                Criteria.where("lastName").regex(name)));
         return mongoTemplate.find(query, Employee.class);
     }
 
