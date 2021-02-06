@@ -17,8 +17,8 @@ public class FunctionalUnitRestController {
     private IFunctionalUnitGatewayService functionalUnitGatewayService;
 
     @GetMapping(value = "/workUnit")
-    List<FunctionalUnit> getAllWorkUnits() {
-        return functionalUnitGatewayService.getAllUnits();
+    List<FunctionalUnit> getAllWorkUnits(@RequestParam(name = "name", required = false) String unitName) {
+        return functionalUnitGatewayService.getAllUnits(unitName);
     }
 
     @GetMapping(value = "/workUnit/{id}")

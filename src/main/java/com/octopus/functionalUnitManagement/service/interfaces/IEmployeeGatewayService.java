@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface IEmployeeGatewayService {
 
     Employee createEmployeeProfile(Employee employee);
-    List<Employee> getAllEmployee();
+    List<Employee> getAllEmployee(String name);
     Optional<Employee> getEmployeeById(String id);
 
 }

@@ -2,7 +2,8 @@ package com.octopus.functionalUnitManagement.service.implementations;
 
 import com.octopus.functionalUnitManagement.businessLogic.interfaces.IUtilityLogic;
 import com.octopus.functionalUnitManagement.models.Employee;
-import com.octopus.functionalUnitManagement.repository.EmployeeRepository;
+import com.octopus.functionalUnitManagement.repository.interfaces.EmployeeRepository;
+import com.octopus.functionalUnitManagement.repository.interfaces.ICustomQueryBuilder;
 import com.octopus.functionalUnitManagement.service.interfaces.IEmployeeGatewayService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,6 +13,9 @@ import java.util.Optional;
 public class EmployeeGatewayService implements IEmployeeGatewayService {
     @Autowired
     private IUtilityLogic utilityLogic;
+
+    @Autowired
+    private ICustomQueryBuilder customQueryBuilder;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -25,8 +29,10 @@ public class EmployeeGatewayService implements IEmployeeGatewayService {
     }
 
     @Override
-    public List<Employee> getAllEmployee() {
-        return employeeRepository.findAll();
+    public List<Employee> getAllEmployee(String name) {
+        if (name == null)
+            return employeeRepository.findAll();
+        return customQueryBuilder.getEmployeeByName(name);
     }
 
     @Override

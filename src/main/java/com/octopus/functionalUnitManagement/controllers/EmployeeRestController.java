@@ -5,6 +5,7 @@ import com.octopus.functionalUnitManagement.models.FunctionalUnit;
 import com.octopus.functionalUnitManagement.service.interfaces.IEmployeeGatewayService;
 import com.octopus.functionalUnitManagement.service.interfaces.IFunctionalUnitGatewayService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public class EmployeeRestController {
     private IEmployeeGatewayService employeeGatewayService;
 
     @GetMapping(value = "/employee")
-    List<Employee> getAllEmployees() {
-       return employeeGatewayService.getAllEmployee();
+    List<Employee> getAllEmployees(@RequestParam(name = "name", required = false) String name) {
+       return employeeGatewayService.getAllEmployee(name);
     }
 
     @GetMapping(value = "/employee/{id}")
