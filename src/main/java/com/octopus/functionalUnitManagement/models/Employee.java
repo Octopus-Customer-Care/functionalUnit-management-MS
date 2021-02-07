@@ -3,6 +3,8 @@ package com.octopus.functionalUnitManagement.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(collection = "com.octopus.functionalUnit.employee")
 public class Employee {
     @Id
@@ -20,6 +22,8 @@ public class Employee {
     private String city;
     private String country;
     private String zipcode;
+    private List<String> caseListIds;
+
 
     public Employee() {
     }
@@ -134,5 +138,13 @@ public class Employee {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public List<String> getCaseListIds() {
+        return caseListIds;
+    }
+
+    public void setCaseListIds(List<String> caseListIds) {
+        this.caseListIds = caseListIds;
     }
 }

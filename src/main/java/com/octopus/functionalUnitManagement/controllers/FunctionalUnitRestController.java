@@ -10,15 +10,20 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/workUnitManagement/v1")
+@RequestMapping
 public class FunctionalUnitRestController {
 
     @Autowired
     private IFunctionalUnitGatewayService functionalUnitGatewayService;
 
+    /**
+     * @param unitName -
+     *
+     **/
     @GetMapping(value = "/workUnit")
-    List<FunctionalUnit> getAllWorkUnits(@RequestParam(name = "name", required = false) String unitName) {
-        return functionalUnitGatewayService.getAllUnits(unitName);
+    List<FunctionalUnit> getAllWorkUnits(@RequestParam(name = "unitName", required = false) String unitName,
+                                         @RequestParam(name = "subType", required = false) String subType) {
+        return functionalUnitGatewayService.getAllUnits(unitName, subType);
     }
 
     @GetMapping(value = "/workUnit/{id}")

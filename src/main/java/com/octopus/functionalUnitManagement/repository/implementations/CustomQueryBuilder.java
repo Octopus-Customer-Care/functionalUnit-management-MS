@@ -28,9 +28,10 @@ public class CustomQueryBuilder implements ICustomQueryBuilder {
     }
 
     @Override
-    public List<FunctionalUnit> getWorkUnits(String workUnit) {
+    public List<FunctionalUnit> getWorkUnits(String workUnit, String subType) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("unitName").regex(workUnit));
+        query.addCriteria(new Criteria().andOperator(Criteria.where("unitName").regex(workUnit),
+                Criteria.where("functionalArea").regex(subType)));
         return mongoTemplate.find(query, FunctionalUnit.class);
     }
 }

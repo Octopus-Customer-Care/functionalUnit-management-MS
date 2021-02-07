@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/workUnitManagement/v1")
+@RequestMapping
 public class EmployeeRestController {
 
     @Autowired

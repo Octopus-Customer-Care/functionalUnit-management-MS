@@ -29,10 +29,15 @@ public class FunctionalUnitGatewayService implements IFunctionalUnitGatewayServi
     }
 
     @Override
-    public List<FunctionalUnit> getAllUnits(String unitName) {
-        if (unitName == null)
+    public List<FunctionalUnit> getAllUnits(String unitName, String subType) {
+        if (unitName == null && subType == null)
             return functionalUnitRepository.findAll();
-        return customQueryBuilder.getWorkUnits(unitName);
+        String workUnitName = "", caseSubType = "";
+        if (unitName != null)
+            workUnitName = unitName;
+        if (subType != null)
+            caseSubType = subType;
+        return customQueryBuilder.getWorkUnits(workUnitName, caseSubType);
     }
 
     @Override
