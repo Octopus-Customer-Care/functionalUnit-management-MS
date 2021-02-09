@@ -1,9 +1,14 @@
 package com.octopus.functionalUnitManagement.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.JsonPatchException;
+import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import com.octopus.functionalUnitManagement.models.Employee;
 import com.octopus.functionalUnitManagement.models.FunctionalUnit;
 import com.octopus.functionalUnitManagement.service.interfaces.IFunctionalUnitGatewayService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +39,11 @@ public class FunctionalUnitRestController {
     @PostMapping(value = "workUnit")
     public FunctionalUnit createWorkUnit(@RequestBody FunctionalUnit functionalUnit) {
         return functionalUnitGatewayService.createUnit(functionalUnit);
+    }
+
+    @PatchMapping(value = "/workUnit/{id}", consumes = "application/merge-patch+json")
+    public void updateWorkUnit(@PathVariable("id") String id, @RequestBody JsonMergePatch payload) throws JsonPatchException {
+        functionalUnitGatewayService.updateUnit(id, payload);
     }
 
 }
