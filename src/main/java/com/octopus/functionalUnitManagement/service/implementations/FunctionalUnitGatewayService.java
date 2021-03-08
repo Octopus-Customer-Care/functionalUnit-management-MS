@@ -7,12 +7,16 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
 import com.octopus.functionalUnitManagement.businessLogic.interfaces.IUtilityLogic;
+import com.octopus.functionalUnitManagement.config.FunctionalUnitConstants;
+import com.octopus.functionalUnitManagement.models.Employee;
 import com.octopus.functionalUnitManagement.models.FunctionalUnit;
+import com.octopus.functionalUnitManagement.repository.interfaces.EmployeeRepository;
 import com.octopus.functionalUnitManagement.repository.interfaces.FunctionalUnitRepository;
 import com.octopus.functionalUnitManagement.repository.interfaces.ICustomQueryBuilder;
 import com.octopus.functionalUnitManagement.service.interfaces.IFunctionalUnitGatewayService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +29,9 @@ public class FunctionalUnitGatewayService implements IFunctionalUnitGatewayServi
 
     @Autowired
     private FunctionalUnitRepository functionalUnitRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private ICustomQueryBuilder customQueryBuilder;
@@ -58,6 +65,25 @@ public class FunctionalUnitGatewayService implements IFunctionalUnitGatewayServi
         Optional<FunctionalUnit> functionalUnit = functionalUnitRepository.findById(id);
         FunctionalUnit patchedUnit = applyPatchToCustomer(payload, functionalUnit);
         functionalUnitRepository.save(patchedUnit);
+    }
+
+    @Override
+    public FunctionalUnit assignRelatedParty(String id, String employeeId) {
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+        Optional<FunctionalUnit> functionalUnit = functionalUnitRepository.findById(id);
+        if (employee.isPresent() &&  functionalUnit.isPresent()) {
+           if (employee.get().getRole().equalsIgnoreCase(FunctionalUnitConstants.MANAGER)) {
+               functionalUnit.get().setManager(employee.get());
+           } else if (employee.get().getRole().equalsIgnoreCase(FunctionalUnitConstants.DEVELOPER)) {
+               List<Employee> relatedParties = functionalUnit.get().getRelatedParty();
+               relatedParties.add(employee.get());
+               functionalUnit.get().setRelatedParty(relatedParties);
+           } else {
+               functionalUnit.get().setUnitLead(employee.get());
+           }
+            return functionalUnitRepository.save(functionalUnit.get());
+        }
+        return null;
     }
 
     private FunctionalUnit applyPatchToCustomer(JsonMergePatch patch, Optional<FunctionalUnit> targetCustomer) throws JsonPatchException {

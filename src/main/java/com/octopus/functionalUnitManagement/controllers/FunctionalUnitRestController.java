@@ -46,4 +46,9 @@ public class FunctionalUnitRestController {
         functionalUnitGatewayService.updateUnit(id, payload);
     }
 
+    @PostMapping(value = "/workUnit/{id}/assignParty/{employeeId}")
+    public FunctionalUnit assignRelatedParty(@PathVariable("id") String id,  @PathVariable("employeeId") String employeeId) {
+        return functionalUnitGatewayService.assignRelatedParty(id, employeeId);
+    }
+
 }
