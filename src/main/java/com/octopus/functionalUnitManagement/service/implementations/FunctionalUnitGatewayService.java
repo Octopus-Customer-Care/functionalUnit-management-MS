@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class FunctionalUnitGatewayService implements IFunctionalUnitGatewayService {
 
@@ -74,12 +75,12 @@ public class FunctionalUnitGatewayService implements IFunctionalUnitGatewayServi
         if (employee.isPresent() &&  functionalUnit.isPresent()) {
            if (employee.get().getRole().equalsIgnoreCase(FunctionalUnitConstants.MANAGER)) {
                functionalUnit.get().setManager(employee.get());
-           } else if (employee.get().getRole().equalsIgnoreCase(FunctionalUnitConstants.DEVELOPER)) {
+           } else if (employee.get().getRole().equalsIgnoreCase(FunctionalUnitConstants.TEAM_LEAD)) {
+               functionalUnit.get().setUnitLead(employee.get());
+           } else {
                List<Employee> relatedParties = functionalUnit.get().getRelatedParty();
                relatedParties.add(employee.get());
                functionalUnit.get().setRelatedParty(relatedParties);
-           } else {
-               functionalUnit.get().setUnitLead(employee.get());
            }
             return functionalUnitRepository.save(functionalUnit.get());
         }
